@@ -1,3 +1,6 @@
+// Used by `npm test` (unit tests, node environment). Integration tests use
+// vitest.config.mts instead (`npm run test:int`), which needs jsdom + React
+// plugin setup that would slow down and complicate this config.
 import { defineConfig } from 'vitest/config'
 import tsconfigPaths from 'vite-tsconfig-paths'
 

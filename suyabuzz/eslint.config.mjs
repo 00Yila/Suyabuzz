@@ -1,16 +1,16 @@
-import { dirname } from 'path'
-import { fileURLToPath } from 'url'
-import { FlatCompat } from '@eslint/eslintrc'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-})
+// Uses eslint-config-next's native flat-config exports rather than the
+// legacy FlatCompat().extends('next/core-web-vitals', 'next/typescript')
+// shim: with eslint-config-next 16.x + ESLint 9, FlatCompat crashes with
+// "TypeError: Converting circular structure to JSON" while formatting a
+// config-validation error, because eslint-plugin-react's flat config
+// self-references itself (documented upstream: vercel/next.js#85244,
+// eslint/eslint#20237). The native exports avoid FlatCompat entirely.
+import nextCoreWebVitals from 'eslint-config-next/core-web-vitals'
+import nextTypescript from 'eslint-config-next/typescript'
 
 const eslintConfig = [
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
+  ...nextCoreWebVitals,
+  ...nextTypescript,
   {
     rules: {
       '@typescript-eslint/ban-ts-comment': 'warn',
