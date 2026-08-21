@@ -1,0 +1,8 @@
+node_modules/
+.next/
+.env
+.env.local
+/suyabuzz/public/media
+.superpowers/
+*.log
+.DS_Store
