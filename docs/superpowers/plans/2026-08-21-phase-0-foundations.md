@@ -1107,15 +1107,19 @@ git push
 
 ## Phase 0 exit criteria
 
-Phase 1 does not begin until all of these hold:
+Phase 1 does not begin until all of these hold. Status as of Tasks 1–8 landing (commit `c4b9209`):
 
-- [ ] `npm run lint && npm run typecheck && npm test && npm run build` passes locally and in CI
-- [ ] `https://<domain>/api/health` returns `status: ok` with `database: connected`
-- [ ] `/admin` is reachable, and a `customer`-role user is refused entry
-- [ ] An uploaded image survives a redeploy
-- [ ] The cron job executed successfully at least once, and an unauthenticated call returns 401
-- [ ] `docs/DEPLOYMENT.md` records the observed idle-latency figure
-- [ ] Hostinger region confirmed US-West
+- [x] `npm run lint && npm run typecheck && npm test && npm run build` passes **locally** (verified independently on every task's commit; 35/35 tests, typecheck exit 0, build succeeds with CI placeholder env vars)
+      [ ] passes **in CI** — workflow is written, reviewed, and proven to trigger correctly on push (confirmed via GitHub's API: the run was found and scheduled for the right commit), but the account has an external billing hold blocking all Actions runs account-wide (job completed with 0 steps executed — a pre-execution block, not a code failure). This is outside the project's control; resolve at github.com/settings/billing, independent of Task 9.
+- [x] `/api/health` returns `status: ok` with `database: connected` — proven live against `localhost` with the real Neon database (Task 6)
+      [ ] proven against the **production domain** — pending Task 9's deploy
+- [x] `/admin` access control is correct — proven via Payload's Local API and direct function calls: an `owner` account works, a `customer`-role account is refused (`Users.access.admin` returns `false`) (Tasks 3–4)
+      [ ] proven via an actual browser hitting the **production** `/admin` — pending Task 9
+- [ ] An uploaded image survives a redeploy — cannot be tested until a real deploy pipeline exists; pending Task 9
+- [x] The cron job's auth gate is correct — unauthenticated call returns 401, unknown job returns 404, valid call returns 200 (all proven by tests + live curl, Task 7)
+      [ ] executed successfully at least once via Hostinger's **actual cron scheduler** — pending Task 9
+- [ ] `docs/DEPLOYMENT.md` records the observed idle-latency figure — file doesn't exist yet; pending Task 9
+- [ ] Hostinger region confirmed US-West — **outstanding, needs the user to check hPanel**
 
 ---
 
