@@ -10,28 +10,28 @@ const valid = {
 
 describe('parseEnv', () => {
   it('accepts a complete configuration', () => {
-    const result = parseEnv(valid as NodeJS.ProcessEnv)
+    const result = parseEnv(valid)
     expect(result.DATABASE_URI).toBe(valid.DATABASE_URI)
   })
 
   it('defaults the shop timezone to America/Los_Angeles', () => {
-    expect(parseEnv(valid as NodeJS.ProcessEnv).SHOP_TIMEZONE).toBe('America/Los_Angeles')
+    expect(parseEnv(valid).SHOP_TIMEZONE).toBe('America/Los_Angeles')
   })
 
   it('rejects a short PAYLOAD_SECRET', () => {
     const raw = { ...valid, PAYLOAD_SECRET: 'too-short' }
-    expect(() => parseEnv(raw as NodeJS.ProcessEnv)).toThrow(/PAYLOAD_SECRET/)
+    expect(() => parseEnv(raw)).toThrow(/PAYLOAD_SECRET/)
   })
 
   it('rejects a missing DATABASE_URI', () => {
-    const { DATABASE_URI, ...raw } = valid
-    expect(() => parseEnv(raw as NodeJS.ProcessEnv)).toThrow(/DATABASE_URI/)
+    const { DATABASE_URI: _omitted, ...raw } = valid
+    expect(() => parseEnv(raw)).toThrow(/DATABASE_URI/)
   })
 
   it('names every invalid key in one error', () => {
     const raw = { NEXT_PUBLIC_SERVER_URL: 'not-a-url' }
     try {
-      parseEnv(raw as NodeJS.ProcessEnv)
+      parseEnv(raw)
       throw new Error('should have thrown')
     } catch (error) {
       const message = (error as Error).message

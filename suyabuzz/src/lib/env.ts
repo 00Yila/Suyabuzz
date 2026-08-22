@@ -10,7 +10,7 @@ const schema = z.object({
 
 export type Env = z.infer<typeof schema>
 
-export function parseEnv(raw: NodeJS.ProcessEnv = process.env): Env {
+export function parseEnv(raw: Record<string, string | undefined> = process.env): Env {
   const result = schema.safeParse(raw)
   if (result.success) return result.data
 
