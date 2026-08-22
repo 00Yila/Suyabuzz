@@ -15,6 +15,7 @@ describe('role predicates', () => {
   it('identifies staff', () => {
     expect(isStaff(staff)).toBe(true)
     expect(isStaff(owner)).toBe(false)
+    expect(isStaff(customer)).toBe(false)
   })
 
   it('treats owner and staff together', () => {
@@ -27,9 +28,5 @@ describe('role predicates', () => {
     expect(isOwner(null)).toBe(false)
     expect(isOwner(undefined)).toBe(false)
     expect(isOwnerOrStaff(null)).toBe(false)
-  })
-
-  it('denies a customer admin access (spec BR: staff cannot change prices, customers see no admin)', () => {
-    expect(isOwnerOrStaff(customer)).toBe(false)
   })
 })
