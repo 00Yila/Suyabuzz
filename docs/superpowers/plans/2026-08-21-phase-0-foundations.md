@@ -177,7 +177,7 @@ git commit -m "chore: scaffold Next.js + Payload app with Vitest harness"
 **Interfaces:**
 - Consumes: `@/` alias from Task 1
 - Produces:
-  - `parseEnv(raw: NodeJS.ProcessEnv): Env` — throws `Error` listing every invalid key
+  - `parseEnv(raw: Record<string, string | undefined>): Env` — throws `Error` listing every invalid key
   - `env(): Env` — memoised accessor used by application code
   - `type Env = { DATABASE_URI: string; PAYLOAD_SECRET: string; NEXT_PUBLIC_SERVER_URL: string; CRON_SECRET: string; SHOP_TIMEZONE: string }`
 
@@ -198,28 +198,28 @@ const valid = {
 
 describe('parseEnv', () => {
   it('accepts a complete configuration', () => {
-    const result = parseEnv(valid as NodeJS.ProcessEnv)
+    const result = parseEnv(valid)
     expect(result.DATABASE_URI).toBe(valid.DATABASE_URI)
   })
 
   it('defaults the shop timezone to America/Los_Angeles', () => {
-    expect(parseEnv(valid as NodeJS.ProcessEnv).SHOP_TIMEZONE).toBe('America/Los_Angeles')
+    expect(parseEnv(valid).SHOP_TIMEZONE).toBe('America/Los_Angeles')
   })
 
   it('rejects a short PAYLOAD_SECRET', () => {
     const raw = { ...valid, PAYLOAD_SECRET: 'too-short' }
-    expect(() => parseEnv(raw as NodeJS.ProcessEnv)).toThrow(/PAYLOAD_SECRET/)
+    expect(() => parseEnv(raw)).toThrow(/PAYLOAD_SECRET/)
   })
 
   it('rejects a missing DATABASE_URI', () => {
-    const { DATABASE_URI, ...raw } = valid
-    expect(() => parseEnv(raw as NodeJS.ProcessEnv)).toThrow(/DATABASE_URI/)
+    const { DATABASE_URI: _omitted, ...raw } = valid
+    expect(() => parseEnv(raw)).toThrow(/DATABASE_URI/)
   })
 
   it('names every invalid key in one error', () => {
     const raw = { NEXT_PUBLIC_SERVER_URL: 'not-a-url' }
     try {
-      parseEnv(raw as NodeJS.ProcessEnv)
+      parseEnv(raw)
       throw new Error('should have thrown')
     } catch (error) {
       const message = (error as Error).message
@@ -253,7 +253,7 @@ const schema = z.object({
 
 export type Env = z.infer<typeof schema>
 
-export function parseEnv(raw: NodeJS.ProcessEnv = process.env): Env {
+export function parseEnv(raw: Record<string, string | undefined> = process.env): Env {
   const result = schema.safeParse(raw)
   if (result.success) return result.data
 
