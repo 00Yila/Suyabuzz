@@ -22,7 +22,10 @@ export async function GET(
   }
 
   const { job } = await params
-  const handler = CRON_JOBS[job]
+  // Object.hasOwn guards against inherited Object.prototype members
+  // (e.g. /api/cron/toString, /api/cron/constructor) resolving to a
+  // truthy, callable "handler" that isn't a real registered job.
+  const handler = Object.hasOwn(CRON_JOBS, job) ? CRON_JOBS[job] : undefined
 
   if (!handler) {
     return Response.json({ error: 'unknown job', job }, { status: 404 })
