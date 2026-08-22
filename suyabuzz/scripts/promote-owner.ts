@@ -1,5 +1,14 @@
+import 'dotenv/config'
 import config from '@payload-config'
 import { getPayload } from 'payload'
+
+// NOTE (Task 3 bootstrap, 2026-08-22): the live Neon database currently has two
+// verification/bootstrap artifacts from the Task 3 rollout of this project:
+//   - owner-bootstrap@suyabuzz.local (role: owner)
+//   - customer-test@suyabuzz.local  (role: customer)
+// These were created to prove the first-user bootstrap and access-control wiring
+// end-to-end. They should be repointed to the real owner's email or deleted before
+// real handover — do not leave them as the production owner account.
 
 const email = process.argv[2]
 
