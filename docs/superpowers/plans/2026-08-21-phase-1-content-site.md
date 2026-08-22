@@ -6,7 +6,7 @@
 
 **Architecture:** A block-based content model. Pages are rows in a Payload `pages` collection composed of typed blocks; a single renderer maps block types to React server components. Presentational logic that can be wrong (contrast, opening hours, SEO metadata, structured data) is extracted into pure functions with unit tests; everything else is verified visually and by the accessibility gate.
 
-**Tech Stack:** Next.js 15 App Router, Payload CMS 3, Tailwind CSS 4, `next/font` (Fraunces + Karla), Vitest, Testing Library, Resend.
+**Tech Stack:** Next.js 16 App Router, Payload CMS 3, Tailwind CSS 4, `next/font` (Fraunces + Karla), Vitest, Testing Library, Resend.
 
 **Spec:** `docs/superpowers/specs/2026-08-21-suyabuzz-ordering-site-design.md`
 

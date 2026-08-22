@@ -4,9 +4,9 @@
 
 **Goal:** Deploy a running Next.js + Payload CMS application to Hostinger, backed by Neon Postgres, with roles, media uploads, a health endpoint, cron authentication and CI — proving the entire deployment path before any business logic is written.
 
-**Architecture:** A single Next.js 15 App Router application with Payload CMS 3 embedded at `/admin`, sharing one process, one deploy and one Postgres database. Access control lives in pure, unit-tested functions that Payload's `access` hooks call, so authorisation rules are testable without a database. Environment configuration is validated at startup and fails fast.
+**Architecture:** A single Next.js 16 App Router application with Payload CMS 3 embedded at `/admin`, sharing one process, one deploy and one Postgres database. Access control lives in pure, unit-tested functions that Payload's `access` hooks call, so authorisation rules are testable without a database. Environment configuration is validated at startup and fails fast.
 
-**Tech Stack:** Next.js 15, TypeScript, Payload CMS 3, PostgreSQL (Neon), Vitest, npm, Node 22 LTS, GitHub Actions, Hostinger Business Node.js hosting.
+**Tech Stack:** Next.js 16, TypeScript, Payload CMS 3, PostgreSQL (Neon), Vitest, npm, Node 22 LTS, GitHub Actions, Hostinger Business Node.js hosting.
 
 **Spec:** `docs/superpowers/specs/2026-08-21-suyabuzz-ordering-site-design.md`
 

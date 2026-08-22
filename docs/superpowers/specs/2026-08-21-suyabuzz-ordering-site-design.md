@@ -65,7 +65,7 @@ These rules are the contract. Everything in §5 onward implements them.
 
 | Layer | Choice |
 |---|---|
-| Application | Next.js 15, App Router, TypeScript |
+| Application | Next.js 16, App Router, TypeScript |
 | CMS + admin | Payload CMS 3, embedded in the same Next.js app at `/admin` |
 | Database | PostgreSQL on Neon (free tier), via Payload's Drizzle Postgres adapter |
 | Payments | Stripe (Checkout + webhooks) |
