@@ -1871,7 +1871,7 @@ Do not write live countdown copy. `cycleFor()` arrives in Phase 2.
 - [ ] **Step 2: Purge placeholder content**
 
 ```bash
-grep -rniE "lorem|ipsum|dolor sit|your-?website|street name, ny|578-393-4937|\+234" \
+grep -rniE "lorem|ipsum|dolor sit|your-?website|street name, ny|578-393-4937|\+234|payload blank template|blank template using payload" \
   --include=*.tsx --include=*.ts --include=*.css src
 ```
 
