@@ -23,6 +23,17 @@ jobs:
 
       - run: npm run lint
       - run: npm run typecheck
+
+      # Only the unit suite (`npm test` -> vitest.config.ts) runs in CI.
+      # `npm run test:int` and `npm run test:e2e` are intentionally NOT run
+      # here: both need a live database connection (integration tests call
+      # getPayload() directly; e2e seeds/deletes real rows), and this
+      # project has no database reachable from CI — the DATABASE_URI below
+      # is a syntactically-valid placeholder used only so the build step can
+      # generate types, not a real connection. Gating those two suites needs
+      # a CI database strategy first (e.g. an ephemeral Postgres service
+      # container, or a dedicated Neon branch for CI) — deferred to a later
+      # phase, tracked in the Phase 0 final review (finding I4).
       - run: npm test
 
       - name: Build

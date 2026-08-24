@@ -6,7 +6,7 @@ up in person — there is no delivery.
 
 ## Stack
 
-- [Next.js 15](https://nextjs.org) (App Router)
+- [Next.js 16](https://nextjs.org) (App Router)
 - [Payload CMS 3](https://payloadcms.com)
 - PostgreSQL, hosted on [Neon](https://neon.tech)
 - Node 22 LTS
@@ -20,6 +20,12 @@ up in person — there is no delivery.
 3. `npm run dev`
 4. Open `http://localhost:3000`. Follow the on-screen instructions to create
    your first admin user at `/admin`.
+5. Run `npx tsx scripts/promote-owner.ts <your-email>`. The `Users`
+   collection requires `role: owner` or `role: staff` to access `/admin`,
+   but Payload's first-user bootstrap always creates that account with the
+   schema default `role: 'customer'` — so without this step you'll be
+   immediately locked out of the admin panel you just registered through.
+   `promote-owner.ts` exists specifically to get you back in.
 
 ## Scripts
 
