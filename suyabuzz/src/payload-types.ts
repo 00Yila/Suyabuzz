@@ -87,8 +87,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    settings: Setting;
+  };
+  globalsSelect: {
+    settings: SettingsSelect<false> | SettingsSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -382,6 +386,100 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * Business details used across the whole site.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings".
+ */
+export interface Setting {
+  id: number;
+  businessName: string;
+  tagline?: string | null;
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    postalCode: string;
+  };
+  /**
+   * US number in E.164 format, e.g. +17145550123. The +234 number on the old site must not be reused.
+   */
+  phone: string;
+  email: string;
+  /**
+   * Digits only, country code first, e.g. 17145550123
+   */
+  whatsappNumber?: string | null;
+  /**
+   * Pickup windows shown on the site.
+   */
+  openingHours?:
+    | {
+        day: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
+        /**
+         * 24h, e.g. 16:00
+         */
+        opens: string;
+        /**
+         * 24h, e.g. 20:00
+         */
+        closes: string;
+        id?: string | null;
+      }[]
+    | null;
+  social?: {
+    instagram?: string | null;
+    facebook?: string | null;
+    tiktok?: string | null;
+  };
+  mapEmbedUrl?: string | null;
+  /**
+   * Shown site-wide until Phase 3 ships checkout. Clear this when online ordering goes live.
+   */
+  orderingNotice?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings_select".
+ */
+export interface SettingsSelect<T extends boolean = true> {
+  businessName?: T;
+  tagline?: T;
+  address?:
+    | T
+    | {
+        street?: T;
+        city?: T;
+        state?: T;
+        postalCode?: T;
+      };
+  phone?: T;
+  email?: T;
+  whatsappNumber?: T;
+  openingHours?:
+    | T
+    | {
+        day?: T;
+        opens?: T;
+        closes?: T;
+        id?: T;
+      };
+  social?:
+    | T
+    | {
+        instagram?: T;
+        facebook?: T;
+        tiktok?: T;
+      };
+  mapEmbedUrl?: T;
+  orderingNotice?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

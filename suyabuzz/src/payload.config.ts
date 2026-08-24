@@ -7,6 +7,7 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Settings } from './globals/Settings'
 import { env } from '@/lib/env'
 
 const filename = fileURLToPath(import.meta.url)
@@ -20,6 +21,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media],
+  globals: [Settings],
   editor: lexicalEditor(),
   secret: env().PAYLOAD_SECRET,
   // Payload's public origin — used to build absolute URLs (e.g. Media file
