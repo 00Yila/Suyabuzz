@@ -22,6 +22,10 @@ export default buildConfig({
   collections: [Users, Media],
   editor: lexicalEditor(),
   secret: env().PAYLOAD_SECRET,
+  // Payload's public origin — used to build absolute URLs (e.g. Media file
+  // URLs, and email links if/when email sending is added). Verified against
+  // `serverURL?: string` in node_modules/payload/dist/config/types.d.ts:1268.
+  serverURL: env().NEXT_PUBLIC_SERVER_URL,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
