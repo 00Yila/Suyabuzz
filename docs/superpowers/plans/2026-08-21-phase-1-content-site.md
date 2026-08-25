@@ -1091,7 +1091,9 @@ git commit -m "feat: add Pages collection with seven content blocks"
 npm install -D @testing-library/react @testing-library/jest-dom jsdom
 ```
 
-In `vitest.config.ts`, change `environment: 'node'` to `environment: 'jsdom'` and add `setupFiles: ['tests/setup.ts']`.
+(`jsdom` and `@testing-library/react` may already be present via the scaffold's integration-test setup — check `package.json` before installing, to avoid a needless version bump.)
+
+**Do not change `vitest.config.ts`'s `environment: 'node'`.** That file is deliberately Node-only — changing it globally would slow down every other unit test (none of which touch a DOM) and defeats the reason `vitest.config.mts` exists as a separate jsdom-based config for integration tests. Instead, add `// @vitest-environment jsdom` as the literal first line of `tests/components/RenderBlocks.test.tsx` (Step 2, below) — Vitest's documented mechanism for overriding the environment on a single file. `setupFiles: ['tests/setup.ts']` is still fine to add to `vitest.config.ts`'s shared config; it only extends `expect()` with additional matchers that non-DOM tests simply never call.
 
 Create `tests/setup.ts`:
 
@@ -1104,6 +1106,7 @@ import '@testing-library/jest-dom/vitest'
 Create `tests/components/RenderBlocks.test.tsx`:
 
 ```tsx
+// @vitest-environment jsdom
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { RenderBlocks } from '@/components/blocks/RenderBlocks'
