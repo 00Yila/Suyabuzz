@@ -636,7 +636,7 @@ export function toSchemaOrgHours(hours: OpeningHour[]): string[] {
 - [ ] **Step 4: Run the tests to verify they pass**
 
 Run: `npm test -- tests/lib/hours.test.ts`
-Expected: PASS — 9 tests passed
+Expected: PASS — 7 tests passed
 
 - [ ] **Step 5: Commit**
 
