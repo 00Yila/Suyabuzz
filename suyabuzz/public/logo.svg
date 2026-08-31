@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 56">
+  <rect width="200" height="56" rx="12" fill="#0A0500" />
+  <text x="16" y="37" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-weight="700">
+    <tspan fill="#FFCD05">Suya</tspan><tspan fill="#FF5733">Buzz</tspan>
+  </text>
+</svg>
