@@ -1530,7 +1530,7 @@ export default async function Page({ params }: Params) {
 
 - [ ] **Step 6: Add the home route**
 
-Create `src/app/(frontend)/page.tsx` that renders the same component with no segments, so `/` resolves to the `home` slug.
+`src/app/(frontend)/page.tsx` already exists — it's Payload's scaffold demo homepage (a "Welcome to your new project" heading, an admin-panel link, a docs link, a `vscode://` file link to itself). Replace its entire contents; none of that scaffold content belongs on a real homepage. The replacement renders the same component the catch-all route uses, with no segments, so `/` resolves to the `home` slug.
 
 - [ ] **Step 7: Verify**
 
