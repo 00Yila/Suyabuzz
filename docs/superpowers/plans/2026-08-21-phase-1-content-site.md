@@ -1674,7 +1674,7 @@ export const ContactMessages: CollectionConfig = {
 npm install resend
 ```
 
-Add `RESEND_API_KEY` and `OWNER_NOTIFICATION_EMAIL` to `src/lib/env.ts` schema and to `.env.example`.
+Add `RESEND_API_KEY` and `OWNER_NOTIFICATION_EMAIL` to `src/lib/env.ts`'s schema as **optional** (`z.string().optional()` / `z.string().email().optional()`), not required, and to `.env.example`. No Resend account exists yet for this project — making these required would break `env()` (and therefore every route, the health check, `npm run dev`, and CI) in every environment until someone sets one up. Email notification is a nice-to-have layered on top of a working contact form, not a boot dependency; the contact form must keep working with these two vars entirely unset.
 
 Create `src/lib/email.ts`:
 
@@ -1684,11 +1684,19 @@ import { env } from '@/lib/env'
 import type { ContactInput } from '@/lib/contact-schema'
 
 export async function sendOwnerNotification(input: ContactInput): Promise<void> {
-  const resend = new Resend(env().RESEND_API_KEY)
+  const apiKey = env().RESEND_API_KEY
+  const to = env().OWNER_NOTIFICATION_EMAIL
+
+  if (!apiKey || !to) {
+    console.warn('Resend not configured (RESEND_API_KEY/OWNER_NOTIFICATION_EMAIL unset) — skipping owner notification email.')
+    return
+  }
+
+  const resend = new Resend(apiKey)
 
   await resend.emails.send({
     from: 'SuyaBuzz Website <website@suyabuzz.com>',
-    to: env().OWNER_NOTIFICATION_EMAIL,
+    to,
     replyTo: input.email,
     subject: `New enquiry from ${input.name}`,
     text: [
@@ -1702,7 +1710,7 @@ export async function sendOwnerNotification(input: ContactInput): Promise<void> 
 }
 ```
 
-`replyTo` matters: the owner hits reply and reaches the customer, not the website.
+`replyTo` matters: the owner hits reply and reaches the customer, not the website. The early return when either var is unset means this function never throws for "not configured" — only for an actual Resend API failure once it IS configured, which the caller in Step 7 already wraps in try/catch.
 
 - [ ] **Step 7: Build the API route**
 
