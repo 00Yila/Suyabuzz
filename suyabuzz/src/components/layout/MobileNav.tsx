@@ -22,7 +22,7 @@ export function MobileNav({ links }: { links: NavLink[] }) {
         aria-controls={navId}
         aria-label={open ? 'Close menu' : 'Open menu'}
         onClick={() => setOpen((value) => !value)}
-        className="inline-flex h-10 w-10 items-center justify-center rounded-md text-ink md:hidden"
+        className="inline-flex h-11 w-11 items-center justify-center rounded-md text-ink md:hidden"
       >
         <span aria-hidden="true" className="text-2xl leading-none">
           {open ? '✕' : '☰'}

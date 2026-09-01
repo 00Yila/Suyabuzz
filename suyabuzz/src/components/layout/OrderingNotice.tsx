@@ -18,7 +18,7 @@ export function OrderingNotice({ message }: { message: string }) {
           type="button"
           onClick={() => setDismissed(true)}
           aria-label="Dismiss notice"
-          className="shrink-0 text-ink/70"
+          className="flex h-11 w-11 shrink-0 items-center justify-center text-ink/70"
         >
           <span aria-hidden="true">✕</span>
         </button>
