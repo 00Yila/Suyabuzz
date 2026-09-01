@@ -61,8 +61,8 @@ export function Footer({ settings }: { settings: Setting }) {
               Pickup hours
             </h2>
             <ul className="mt-3 space-y-1 text-white/80">
-              {hours.map((line) => (
-                <li key={line}>{line}</li>
+              {hours.map((line, index) => (
+                <li key={`${line}-${index}`}>{line}</li>
               ))}
             </ul>
           </div>

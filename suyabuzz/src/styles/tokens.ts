@@ -31,4 +31,5 @@ export const APPROVED_PAIRS: ReadonlyArray<{
   { fg: 'white', bg: 'ink', minRatio: 4.5 },
   { fg: 'yellow', bg: 'charcoal', minRatio: 3 },
   { fg: 'yellow', bg: 'ink', minRatio: 3 },
+  { fg: 'ember', bg: 'ink', minRatio: 4.5 },
 ]
