@@ -8,6 +8,7 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
+import { ContactMessages } from './collections/ContactMessages'
 import { Settings } from './globals/Settings'
 import { env } from '@/lib/env'
 
@@ -21,7 +22,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Pages],
+  collections: [Users, Media, Pages, ContactMessages],
   globals: [Settings],
   editor: lexicalEditor(),
   secret: env().PAYLOAD_SECRET,

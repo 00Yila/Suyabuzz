@@ -6,6 +6,11 @@ const schema = z.object({
   NEXT_PUBLIC_SERVER_URL: z.url('must be a valid URL'),
   CRON_SECRET: z.string().min(32, 'must be at least 32 characters'),
   SHOP_TIMEZONE: z.string().default('America/Los_Angeles'),
+  // Optional: the contact form persists to the database and works without
+  // these. When unset, sendOwnerNotification() skips the email and warns
+  // instead of throwing — see src/lib/email.ts.
+  RESEND_API_KEY: z.string().optional(),
+  OWNER_NOTIFICATION_EMAIL: z.string().email('must be a valid email address').optional(),
 })
 
 export type Env = z.infer<typeof schema>
