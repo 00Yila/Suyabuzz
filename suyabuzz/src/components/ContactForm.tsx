@@ -27,6 +27,13 @@ export function ContactForm({ phone, whatsappNumber }: { phone: string; whatsapp
     if (firstInvalid) fieldRefs[firstInvalid].current?.focus()
   }
 
+  // True only for the general/network/500 failure path: field-level errors
+  // (bad email, empty name, ...) already render their own visible messages
+  // next to each input, so this only needs to cover the case where
+  // `status === 'error'` but no individual field is at fault.
+  const hasFieldErrors = FIELD_ORDER.some((field) => errors[field]?.length)
+  const showGeneralError = status === 'error' && !hasFieldErrors
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
@@ -141,7 +148,11 @@ export function ContactForm({ phone, whatsappNumber }: { phone: string; whatsapp
           className="mt-1 w-full rounded-lg border border-charcoal/20 bg-cream px-4 py-3"
         />
         {errors.name?.length ? (
-          <p id="contact-name-error" aria-live="polite" className="mt-1 text-sm text-ember">
+          <p
+            id="contact-name-error"
+            aria-live="polite"
+            className="mt-1 border-l-2 border-ember pl-2 text-sm font-semibold text-ink"
+          >
             {errors.name[0]}
           </p>
         ) : null}
@@ -163,7 +174,11 @@ export function ContactForm({ phone, whatsappNumber }: { phone: string; whatsapp
           className="mt-1 w-full rounded-lg border border-charcoal/20 bg-cream px-4 py-3"
         />
         {errors.email?.length ? (
-          <p id="contact-email-error" aria-live="polite" className="mt-1 text-sm text-ember">
+          <p
+            id="contact-email-error"
+            aria-live="polite"
+            className="mt-1 border-l-2 border-ember pl-2 text-sm font-semibold text-ink"
+          >
             {errors.email[0]}
           </p>
         ) : null}
@@ -184,7 +199,11 @@ export function ContactForm({ phone, whatsappNumber }: { phone: string; whatsapp
           className="mt-1 w-full rounded-lg border border-charcoal/20 bg-cream px-4 py-3"
         />
         {errors.phone?.length ? (
-          <p id="contact-phone-error" aria-live="polite" className="mt-1 text-sm text-ember">
+          <p
+            id="contact-phone-error"
+            aria-live="polite"
+            className="mt-1 border-l-2 border-ember pl-2 text-sm font-semibold text-ink"
+          >
             {errors.phone[0]}
           </p>
         ) : null}
@@ -205,7 +224,11 @@ export function ContactForm({ phone, whatsappNumber }: { phone: string; whatsapp
           className="mt-1 w-full rounded-lg border border-charcoal/20 bg-cream px-4 py-3"
         />
         {errors.message?.length ? (
-          <p id="contact-message-error" aria-live="polite" className="mt-1 text-sm text-ember">
+          <p
+            id="contact-message-error"
+            aria-live="polite"
+            className="mt-1 border-l-2 border-ember pl-2 text-sm font-semibold text-ink"
+          >
             {errors.message[0]}
           </p>
         ) : null}
@@ -225,6 +248,12 @@ export function ContactForm({ phone, whatsappNumber }: { phone: string; whatsapp
         <label htmlFor="contact-website">Leave this field blank</label>
         <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>
+
+      {showGeneralError ? (
+        <p className="border-l-2 border-ember pl-3 text-sm font-semibold text-ink">
+          {statusMessage}
+        </p>
+      ) : null}
 
       <button
         type="submit"
