@@ -11,6 +11,11 @@ const schema = z.object({
   // instead of throwing — see src/lib/email.ts.
   RESEND_API_KEY: z.string().optional(),
   OWNER_NOTIFICATION_EMAIL: z.string().email('must be a valid email address').optional(),
+  // Optional: GA4 measurement ID. When unset, layout.tsx renders no analytics
+  // script at all — see src/app/(frontend)/layout.tsx. Deciding which GA4
+  // property to use (reuse or create new) is the business owner's call, not
+  // this codebase's.
+  NEXT_PUBLIC_GA_ID: z.string().optional(),
 })
 
 export type Env = z.infer<typeof schema>

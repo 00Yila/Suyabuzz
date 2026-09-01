@@ -1,6 +1,7 @@
 import React from 'react'
 import config from '@payload-config'
 import { getPayload } from 'payload'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { body, display } from '@/lib/fonts'
 import { SkipLink } from '@/components/layout/SkipLink'
 import { Header } from '@/components/layout/Header'
@@ -21,6 +22,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
   const payload = await getPayload({ config })
   const settings = await payload.findGlobal({ slug: 'settings' })
+  const gaId = env().NEXT_PUBLIC_GA_ID
 
   // Settings has no standalone business "description" — `tagline` is a
   // marketing slogan ("Local Flavour, Global Buzz"), not a factual summary
@@ -66,6 +68,13 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           number={settings.whatsappNumber ?? ''}
           message="Hi SuyaBuzz! I'd like to pre-order."
         />
+        {/*
+          No GA4 property ID exists yet — that's a business decision (reuse
+          or create a property), not a technical one. Until
+          NEXT_PUBLIC_GA_ID is set, render nothing: no script tag, no
+          footprint at all.
+        */}
+        {gaId ? <GoogleAnalytics gaId={gaId} /> : null}
       </body>
     </html>
   )
