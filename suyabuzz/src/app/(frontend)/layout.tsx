@@ -24,9 +24,15 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
   // Settings has no standalone business "description" — `tagline` is a
   // marketing slogan ("Local Flavour, Global Buzz"), not a factual summary
-  // suited to a Restaurant's JSON-LD `description`. Reuse the same static
-  // description already used for the site's <meta name="description">
-  // above, so the two stay consistent.
+  // suited to a Restaurant's JSON-LD `description`. Reuse this layout's
+  // static site-level description instead: it's a factual sentence about
+  // the business, which is what Restaurant.description expects. Individual
+  // pages ([...slug]/page.tsx, contact/page.tsx) set their own, different
+  // <meta name="description"> per page via generateMetadata() — Next.js
+  // lets a child route's metadata override this layout's, so the two are
+  // NOT guaranteed to match on most real pages. That's fine: this JSON-LD
+  // describes the business itself, not whatever page it happens to render
+  // on.
   const restaurantJsonLd = buildRestaurantJsonLd({
     name: settings.businessName,
     description: metadata.description,
